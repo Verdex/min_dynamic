@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using Dalet.Util;
 
-namespace Dalet
+namespace Dalet.Lex
 {
     public enum TType { Int
                       , String
