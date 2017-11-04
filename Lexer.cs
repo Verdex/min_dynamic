@@ -135,6 +135,21 @@ namespace Dalet
             var end = _index;
             return new Token( TType.Int, start, end, new string( ds.ToArray() ) );
         }
+
+        private Token String()
+        {
+            var start = _index - 1;
+            // TODO handle escape characters
+            // TODO handle bad escape character (exception with error)
+            var c = new List<char>();
+            while ( !Try( '"' ) )
+            {
+                c.Add( Current );
+                Next();
+            }
+            var end = _index - 1;
+            return new Token( TType.String, start, end, new string( c.ToArray() ) );
+        }
         
         // TODO need to handle comments
         public IEnumerable<Token> Lex()
@@ -152,6 +167,10 @@ namespace Dalet
                 else if ( Try( "var" ) )
                 {
                     yield return new Token( TType.Var, _index - 3, _index - 1, null );
+                }
+                else if ( Try( '"' ) )
+                {
+                    yield return String();
                 }
             }
         }
