@@ -10,22 +10,15 @@ namespace Dalet
                       , String
                       , Var
                       , Class
-                      , Util
                       , Dot
-                      , Env
-                      , Test
                       , Public
                       , Symbol
                       , Return
-                      , Yield
                       , Break
                       , Continue
                       , Function
-                      , Generator
-                      , Constant
-                      , Unique
+                      , Namespace
                       , Import
-                      , Injector // Environment injection function
                       , Equal
                       , LessThan
                       , GreaterThan
@@ -47,7 +40,6 @@ namespace Dalet
                       , Foreach
                       , While
                       , SemiColon
-                      // TODO Injectors might need some characters for programmatic definitions
                       }
 
     public class Token
