@@ -136,17 +136,61 @@ namespace Dalet.Lex
             return new Token( TType.Int, start, end, new string( ds.ToArray() ) );
         }
 
+        private char EscapeChar()
+        {
+            switch( Current )
+            {
+                case '\\':
+                    return '\\';
+                case '"':
+                    return '"';
+                case '0':
+                    return '\0';
+                case 'a':
+                    return '\a';
+                case 'b':
+                    return '\b';
+                case 'f':
+                    return '\f';
+                case 'n':
+                    return '\n';
+                case 'r':
+                    return '\r';
+                case 't':
+                    return '\t';
+                case 'v':
+                    return '\v';
+                default:
+                    throw new Exception( _de.Error( _index, $"unknown escape character {Current} encountered" ) );
+            }
+        }
+
         private Token String()
         {
             var start = _index - 1;
             // TODO handle escape characters
             // TODO handle bad escape character (exception with error)
+            var escape = false;
             var c = new List<char>();
-            while ( !Try( '"' ) )
+            while ( !escape && Current != '"'  )
             {
-                c.Add( Current );
+                if ( escape ) 
+                {
+                    var ec = EscapeChar();
+                    c.Add( ec );
+                    escape = false;
+                }
+                else if ( Current == '\\' )
+                {
+                    escape = true;
+                }
+                else
+                {
+                    c.Add( Current );
+                }
                 Next();
             }
+            Next();
             var end = _index - 1;
             return new Token( TType.String, start, end, new string( c.ToArray() ) );
         }
