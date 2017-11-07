@@ -168,11 +168,10 @@ namespace Dalet.Lex
         private Token String()
         {
             var start = _index - 1;
-            // TODO handle escape characters
-            // TODO handle bad escape character (exception with error)
+            // TODO need to test escape sequences
             var escape = false;
             var c = new List<char>();
-            while ( !escape && Current != '"'  )
+            while ( !escape && Current != '"'  ) // TODO while !EndText?
             {
                 if ( escape ) 
                 {
