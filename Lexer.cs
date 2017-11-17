@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Dalet.Util;
 
@@ -168,10 +169,9 @@ namespace Dalet.Lex
         private Token String()
         {
             var start = _index - 1;
-            // TODO need to test escape sequences
             var escape = false;
             var c = new List<char>();
-            while ( !escape && Current != '"'  ) // TODO while !EndText?
+            while ( !EndText && (escape || Current != '"') ) 
             {
                 if ( escape ) 
                 {
@@ -188,6 +188,10 @@ namespace Dalet.Lex
                     c.Add( Current );
                 }
                 Next();
+            }
+            if ( escape )
+            {
+                throw new Exception( _de.Error( _index, $"String ended with escape" ) );
             }
             Next();
             var end = _index - 1;
