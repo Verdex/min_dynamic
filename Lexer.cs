@@ -39,6 +39,7 @@ namespace Dalet.Lex
                       , Else
                       , ElseIf
                       , Foreach
+                      , In
                       , While
                       , SemiColon
                       }
@@ -226,6 +227,26 @@ namespace Dalet.Lex
                 else if ( Try( "elseif" ) )
                 {
                     yield return new Token( TType.ElseIf, _index - 6, _index - 1, null );
+                }
+                else if ( Try( "while" ) )
+                {
+                    yield return new Token( TType.While, _index - 5, _index - 1, null );
+                }
+                else if ( Try( "foreach" ) )
+                {
+                    yield return new Token( TType.Foreach, _index - 7, _index - 1, null );
+                }
+                else if ( Try( "in" ) )
+                {
+                    yield return new Token( TType.In, _index - 2, _index - 1, null );
+                }
+                else if ( Try( "break" ) )
+                {
+                    yield return new Token( TType.Break, _index - 5, _index - 1, null );
+                }
+                else if ( Try( "continue" ) )
+                {
+                    yield return new Token( TType.Continue, _index - 8, _index - 1, null );
                 }
                 else if ( Try( '"' ) )
                 {
