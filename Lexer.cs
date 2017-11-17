@@ -215,6 +215,18 @@ namespace Dalet.Lex
                 {
                     yield return new Token( TType.Var, _index - 3, _index - 1, null );
                 }
+                else if ( Try( "else" ) )
+                {
+                    yield return new Token( TType.Else, _index - 4, _index -1, null );
+                }
+                else if ( Try( "if" ) )
+                {
+                    yield return new Token( TType.If, _index - 2, _index - 1, null );
+                }
+                else if ( Try( "elseif" ) )
+                {
+                    yield return new Token( TType.ElseIf, _index - 6, _index - 1, null );
+                }
                 else if ( Try( '"' ) )
                 {
                     yield return String();
