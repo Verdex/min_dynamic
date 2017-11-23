@@ -252,6 +252,78 @@ namespace Dalet.Lex
                 {
                     yield return String();
                 }
+                else if ( Try( "class" ) )
+                {
+                }
+                else if ( Try( '.' ) )
+                {
+                }
+                else if ( Try( "public" ) )
+                {
+                }
+                else if ( Try( "return" ) )
+                {
+                }
+                else if ( Try( "func" ) )
+                {
+                }
+                else if ( Try( "namespace" ) )
+                {
+                }
+                else if ( Try( "import" ) )
+                {
+                }
+                else if ( Try( '=' ) )
+                {
+                }
+                else if ( Try( '+' ) )
+                {
+                }
+                else if ( Try( '-' ) )
+                {
+                }
+                else if ( Try( '*' ) )
+                {
+                }
+                else if ( Try( '/' ) )
+                {
+                }
+                else if ( Try( '!' ) )
+                {
+                }
+                else if ( Try( "&&" ) )
+                {
+                }
+                else if ( Try( "||" ) )
+                {
+                }
+                else if ( Try( '^' ) )
+                {
+                }
+                else if ( Try( '<' ) )
+                {
+                }
+                else if ( Try( '>' ) )
+                {
+                }
+                else if ( Try( '{' ) )
+                {
+                }
+                else if ( Try( '}' ) )
+                {
+                }
+                else if ( Try( '(' ) )
+                {
+                }
+                else if ( Try( ')' ) )
+                {
+
+                }
+                else if ( Try( ';' ) )
+                {
+                }
+                // TODO handle symbols (might need them higher up; also remember to handle symbols that start with keywords) 
+                // TODO handle final else
             }
         }
     }
