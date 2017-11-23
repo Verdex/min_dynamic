@@ -346,8 +346,11 @@ namespace Dalet.Lex
                 {
                     yield return new Token( TType.SemiColon, _index - 1, null );
                 }
+                else 
+                {
+                    throw new Exception( _de.Error( _index, $"unknown token encountered {Current}" ) );
+                }
                 // TODO handle symbols (might need them higher up; also remember to handle symbols that start with keywords) 
-                // TODO handle final else
             }
         }
     }
