@@ -57,6 +57,8 @@ namespace Dalet.Lex
             StartIndex = si;
             EndIndex = ei;
         }
+        public Token( TType t, int i, params string[] values )
+            : this( t, i, i, values ) { }
     }
 
     public class Lexer
@@ -254,73 +256,95 @@ namespace Dalet.Lex
                 }
                 else if ( Try( "class" ) )
                 {
+                    yield return new Token( TType.Class, _index - 5, _index - 1, null );
                 }
                 else if ( Try( '.' ) )
                 {
+                    yield return new Token( TType.Dot, _index - 1, null );
                 }
                 else if ( Try( "public" ) )
                 {
+                    yield return new Token( TType.Public, _index - 6, _index - 1, null );
                 }
                 else if ( Try( "return" ) )
                 {
+                    yield return new Token( TType.Return, _index - 5, _index - 1, null );
                 }
                 else if ( Try( "func" ) )
                 {
+                    yield return new Token( TType.Function, _index - 5, _index - 1, null );
                 }
                 else if ( Try( "namespace" ) )
                 {
+                    yield return new Token( TType.Namespace, _index - 9, _index - 1, null );
                 }
                 else if ( Try( "import" ) )
                 {
+                    yield return new Token( TType.Import, _index - 6, _index - 1, null );
                 }
                 else if ( Try( '=' ) )
                 {
+                    yield return new Token( TType.Equal, _index - 1, null );
                 }
                 else if ( Try( '+' ) )
                 {
+                    yield return new Token( TType.Add, _index - 1, null );
                 }
                 else if ( Try( '-' ) )
                 {
+                    yield return new Token( TType.Sub, _index - 1, null );
                 }
                 else if ( Try( '*' ) )
                 {
+                    yield return new Token( TType.Mult, _index - 1, null );
                 }
                 else if ( Try( '/' ) )
                 {
+                    yield return new Token( TType.Div, _index - 1, null );
                 }
                 else if ( Try( '!' ) )
                 {
+                    yield return new Token( TType.Not, _index - 1, null );
                 }
                 else if ( Try( "&&" ) )
                 {
+                    yield return new Token( TType.And, _index - 1, null );
                 }
                 else if ( Try( "||" ) )
                 {
+                    yield return new Token( TType.Or, _index - 1, null );
                 }
                 else if ( Try( '^' ) )
                 {
+                    yield return new Token( TType.Xor, _index - 1, null );
                 }
                 else if ( Try( '<' ) )
                 {
+                    yield return new Token( TType.LessThan, _index - 1, null );
                 }
                 else if ( Try( '>' ) )
                 {
+                    yield return new Token( TType.GreaterThan, _index - 1, null );
                 }
                 else if ( Try( '{' ) )
                 {
+                    yield return new Token( TType.LCurly, _index - 1, null );
                 }
                 else if ( Try( '}' ) )
                 {
+                    yield return new Token( TType.RCurly, _index - 1, null );
                 }
                 else if ( Try( '(' ) )
                 {
+                    yield return new Token( TType.LParen, _index - 1, null );
                 }
                 else if ( Try( ')' ) )
                 {
-
+                    yield return new Token( TType.RParen, _index - 1, null );
                 }
                 else if ( Try( ';' ) )
                 {
+                    yield return new Token( TType.SemiColon, _index - 1, null );
                 }
                 // TODO handle symbols (might need them higher up; also remember to handle symbols that start with keywords) 
                 // TODO handle final else
