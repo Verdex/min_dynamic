@@ -34,7 +34,7 @@ namespace Dalet.Lex
                       , LParen
                       , RParen
                       , LCurly
-                      , RCulry
+                      , RCurly
                       , If
                       , Else
                       , ElseIf
