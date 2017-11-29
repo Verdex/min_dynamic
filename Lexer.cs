@@ -79,6 +79,19 @@ namespace Dalet.Lex
         {
             _index++;    
         }
+        private bool TryKeyword(string s)
+        {
+            var t = _text.Substring( _index );
+            if ( t.StartsWith( s ) && Char.IsWhiteSpace( t[s.Length] ) )
+            {
+                for( var i = 0; i < s.Length; i++ )
+                {
+                    Next();
+                }
+                return true;
+            }
+            return false;
+        }
         private bool Try(string s)
         {
             var t = _text.Substring( _index );
@@ -213,6 +226,10 @@ namespace Dalet.Lex
                 else if( Try( Char.IsDigit ) )
                 {
                     yield return Base10Int( Previous );
+                }
+                else if( Try( '_' ) || Try( Char.IsLetter ) ) // TODO probably a TryKeyword is needed
+                {
+                //    yield return 
                 }
                 else if ( Try( "var" ) )
                 {
