@@ -75,14 +75,14 @@ namespace Dalet.Lex
         private char Previous => _text[_index - 1];
         private char Current => _text[_index];
         private bool EndText => _text.Length <= _index;
-        private void Next() 
+        private void Next()  // TODO replace next with just _index++ or _index+=N
         {
             _index++;    
         }
         private bool TryKeyword(string s)
         {
             var t = _text.Substring( _index );
-            if ( t.StartsWith( s ) && Char.IsWhiteSpace( t[s.Length] ) )
+            if ( t.StartsWith( s ) && ( t.Length == s.Length || Char.IsWhiteSpace( t[s.Length] ) ) )
             {
                 for( var i = 0; i < s.Length; i++ )
                 {
@@ -227,43 +227,39 @@ namespace Dalet.Lex
                 {
                     yield return Base10Int( Previous );
                 }
-                else if( Try( '_' ) || Try( Char.IsLetter ) ) // TODO probably a TryKeyword is needed
-                {
-                //    yield return 
-                }
-                else if ( Try( "var" ) )
+                else if ( TryKeyword( "var" ) )
                 {
                     yield return new Token( TType.Var, _index - 3, _index - 1, null );
                 }
-                else if ( Try( "else" ) )
+                else if ( TryKeyword( "else" ) )
                 {
                     yield return new Token( TType.Else, _index - 4, _index -1, null );
                 }
-                else if ( Try( "if" ) )
+                else if ( TryKeyword( "if" ) )
                 {
                     yield return new Token( TType.If, _index - 2, _index - 1, null );
                 }
-                else if ( Try( "elseif" ) )
+                else if ( TryKeyword( "elseif" ) )
                 {
                     yield return new Token( TType.ElseIf, _index - 6, _index - 1, null );
                 }
-                else if ( Try( "while" ) )
+                else if ( TryKeyword( "while" ) )
                 {
                     yield return new Token( TType.While, _index - 5, _index - 1, null );
                 }
-                else if ( Try( "foreach" ) )
+                else if ( TryKeyword( "foreach" ) )
                 {
                     yield return new Token( TType.Foreach, _index - 7, _index - 1, null );
                 }
-                else if ( Try( "in" ) )
+                else if ( TryKeyword( "in" ) )
                 {
                     yield return new Token( TType.In, _index - 2, _index - 1, null );
                 }
-                else if ( Try( "break" ) )
+                else if ( TryKeyword( "break" ) )
                 {
                     yield return new Token( TType.Break, _index - 5, _index - 1, null );
                 }
-                else if ( Try( "continue" ) )
+                else if ( TryKeyword( "continue" ) )
                 {
                     yield return new Token( TType.Continue, _index - 8, _index - 1, null );
                 }
@@ -271,7 +267,7 @@ namespace Dalet.Lex
                 {
                     yield return String();
                 }
-                else if ( Try( "class" ) )
+                else if ( TryKeyword( "class" ) )
                 {
                     yield return new Token( TType.Class, _index - 5, _index - 1, null );
                 }
@@ -279,23 +275,23 @@ namespace Dalet.Lex
                 {
                     yield return new Token( TType.Dot, _index - 1, null );
                 }
-                else if ( Try( "public" ) )
+                else if ( TryKeyword( "public" ) )
                 {
                     yield return new Token( TType.Public, _index - 6, _index - 1, null );
                 }
-                else if ( Try( "return" ) )
+                else if ( TryKeyword( "return" ) )
                 {
                     yield return new Token( TType.Return, _index - 5, _index - 1, null );
                 }
-                else if ( Try( "func" ) )
+                else if ( TryKeyword( "func" ) )
                 {
                     yield return new Token( TType.Function, _index - 5, _index - 1, null );
                 }
-                else if ( Try( "namespace" ) )
+                else if ( TryKeyword( "namespace" ) )
                 {
                     yield return new Token( TType.Namespace, _index - 9, _index - 1, null );
                 }
-                else if ( Try( "import" ) )
+                else if ( TryKeyword( "import" ) )
                 {
                     yield return new Token( TType.Import, _index - 6, _index - 1, null );
                 }
@@ -363,11 +359,14 @@ namespace Dalet.Lex
                 {
                     yield return new Token( TType.SemiColon, _index - 1, null );
                 }
+                else if( Try( '_' ) || Try( Char.IsLetter ) ) 
+                {
+                    // TODO symbol lexer
+                }
                 else 
                 {
                     throw new Exception( _de.Error( _index, $"unknown token encountered {Current}" ) );
                 }
-                // TODO handle symbols (might need them higher up; also remember to handle symbols that start with keywords) 
             }
         }
     }
