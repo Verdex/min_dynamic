@@ -129,6 +129,20 @@ namespace Dalet.Lex
             }
         }
 
+        private Token Symbol( char init )
+        {
+            var start = _index - 1;
+            var values = new List<char> { init };
+
+            while( !EndText && (Try( Char.IsLetter ) || Try( Char.IsDigit ) || Try("_")) )
+            {
+                values.Add( Previous );
+            }
+
+            var end = _index;
+            return new Token( TType.Symbol, start, end, new string( values.ToArray() ) );
+        }
+
         private Token Base10Int( char init )
         {
             var start = _index - 1;
@@ -351,7 +365,7 @@ namespace Dalet.Lex
                 }
                 else if( Try( '_' ) || Try( Char.IsLetter ) ) 
                 {
-                    // TODO symbol lexer
+                    yield return Symbol( Previous );
                 }
                 else 
                 {
