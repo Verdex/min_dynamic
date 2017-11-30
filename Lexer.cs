@@ -75,19 +75,12 @@ namespace Dalet.Lex
         private char Previous => _text[_index - 1];
         private char Current => _text[_index];
         private bool EndText => _text.Length <= _index;
-        private void Next()  // TODO replace next with just _index++ or _index+=N
-        {
-            _index++;    
-        }
         private bool TryKeyword(string s)
         {
             var t = _text.Substring( _index );
             if ( t.StartsWith( s ) && ( t.Length == s.Length || Char.IsWhiteSpace( t[s.Length] ) ) )
             {
-                for( var i = 0; i < s.Length; i++ )
-                {
-                    Next();
-                }
+                _index+=s.Length;
                 return true;
             }
             return false;
@@ -97,10 +90,7 @@ namespace Dalet.Lex
             var t = _text.Substring( _index );
             if ( t.StartsWith( s ) )
             {
-                for( var i = 0; i < s.Length; i++ )
-                {
-                    Next();
-                }
+                _index+=s.Length;
                 return true;
             }
             return false;
@@ -109,7 +99,7 @@ namespace Dalet.Lex
         {
             if ( p(Current) )
             {
-                Next();
+                _index++;
                 return true;
             }
             return false;
@@ -118,7 +108,7 @@ namespace Dalet.Lex
         {
             if ( c == Current )
             {
-                Next();
+                _index++;
                 return true;
             }
             return false;
@@ -129,7 +119,7 @@ namespace Dalet.Lex
             {
                 throw new Exception( _de.Error( _index, $"unknown symbol {Current} encountered" ) );
             }
-            Next();
+            _index++;
         }
         private void Is(char c)
         {
@@ -203,13 +193,13 @@ namespace Dalet.Lex
                 {
                     c.Add( Current );
                 }
-                Next();
+                _index++;
             }
             if ( escape )
             {
                 throw new Exception( _de.Error( _index, $"String ended with escape" ) );
             }
-            Next();
+            _index++;
             var end = _index - 1;
             return new Token( TType.String, start, end, new string( c.ToArray() ) );
         }
