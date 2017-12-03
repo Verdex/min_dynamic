@@ -217,8 +217,34 @@ namespace Dalet.Lex
             var end = _index - 1;
             return new Token( TType.String, start, end, new string( c.ToArray() ) );
         }
+
+        private void LineComment()
+        {
+            while ( !EndText && Current != '\n' && Current != '\r' )
+            {
+                Console.WriteLine( Current );
+                _index++;
+            }
+        }
+
+        private void BlockComment()
+        {
+            var s = false;
+            var e = true;
+            while ( !EndText && e )
+            {
+                if ( s && Current == '/' ) 
+                {
+                    e = false;
+                }
+                if ( Current == '*' )
+                {
+                    s = true;
+                }
+                _index++;
+            }
+        }
         
-        // TODO need to handle comments
         public IEnumerable<Token> Lex()
         {
             while ( !EndText )
@@ -227,7 +253,15 @@ namespace Dalet.Lex
                 {
                    continue;
                 }
-                else if( Try( Char.IsDigit ) )
+                else if ( Try( "//" ) )
+                { 
+                    LineComment(); 
+                }
+                else if ( Try( "/*" ) )
+                {
+                    BlockComment();
+                }
+                else if ( Try( Char.IsDigit ) )
                 {
                     yield return Base10Int( Previous );
                 }
