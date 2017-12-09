@@ -42,6 +42,7 @@ namespace Dalet.Lex
                       , In
                       , While
                       , SemiColon
+                      , Boolean
                       }
 
     public class Token
@@ -264,6 +265,14 @@ namespace Dalet.Lex
                 else if ( Try( Char.IsDigit ) )
                 {
                     yield return Base10Int( Previous );
+                }
+                else if ( TryKeyword( "true" ) )
+                {
+                    yield return new Token( TType.Boolean, _index - 4, _index - 1, null );
+                }
+                else if ( TryKeyword( "false" ) )
+                {
+                    yield return new Token( TType.Boolean, _index - 5, _index - 1, null );
                 }
                 else if ( TryKeyword( "var" ) )
                 {
