@@ -268,11 +268,11 @@ namespace Dalet.Lex
                 }
                 else if ( TryKeyword( "true" ) )
                 {
-                    yield return new Token( TType.Boolean, _index - 4, _index - 1, null );
+                    yield return new Token( TType.Boolean, _index - 4, _index - 1, "true" );
                 }
                 else if ( TryKeyword( "false" ) )
                 {
-                    yield return new Token( TType.Boolean, _index - 5, _index - 1, null );
+                    yield return new Token( TType.Boolean, _index - 5, _index - 1, "false" );
                 }
                 else if ( TryKeyword( "var" ) )
                 {

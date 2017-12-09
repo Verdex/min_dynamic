@@ -15,6 +15,19 @@ namespace Dalet.Parse
     {
         public string Name { get; set; }
     }
+    public class Lambda : Expr 
+    {
+        public IEnumerable<VarName> Parameters { get; set; }
+        public IEnumerable<Stm> Body { get; set; }
+    }
+    public class Number : Expr
+    {
+        public int Value { get; set; }
+    }
+    public class Boolean : Expr
+    {
+        public bool Value { get; set; }
+    }
     public class Foreach : Stm
     {
         public Expr SeqExpr { get; set; }
@@ -32,6 +45,9 @@ namespace Dalet.Parse
         public IEnumerable<Stm> Body { get; set }
         public Stm Else { get; set; }
     }
+    public class Break : Stm { }
+    public class Continue : Stm { }
+    public class Return : Stm { }
     public class Parser
     {
     }
