@@ -28,6 +28,10 @@ namespace Dalet.Parse
     {
         public bool Value { get; set; }
     }
+    public class Str : Expr 
+    {
+        public string Value { get; set; }
+    }
     public class Foreach : Stm
     {
         public Expr SeqExpr { get; set; }
