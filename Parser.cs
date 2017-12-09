@@ -52,6 +52,20 @@ namespace Dalet.Parse
     public class Break : Stm { }
     public class Continue : Stm { }
     public class Return : Stm { }
+    public class Function : Stm 
+    {
+        public string Name { get; set; }
+        public bool IsPublic { get; set; }
+        public IEnumerable<VarName> Parameters { get; set; }
+        public IEnumerable<Stm> Body { get; set; }
+    }
+    public class Class : Stm 
+    {
+        public string Name { get; set; }
+        // TODO class fields
+        public IEnumerable<Function> Methods { get; set; }
+        public bool IsPublic { get; set; }
+    }
     public class Parser
     {
     }
