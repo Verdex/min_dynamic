@@ -6,6 +6,7 @@ using Dalet.Lex;
 namespace Dalet.Parse
 {
     // TODO error handling info
+    // TODO binary expr 
     public interface Expr {}
     public interface Stm {}
     public class Var : Expr
@@ -14,6 +15,7 @@ namespace Dalet.Parse
     }
     public class Symbol
     {
+        public IEnumerable<string> Namespace { get; set; }
         public string Value { get; set; }
     }
     public class Lambda : Expr 
@@ -55,7 +57,7 @@ namespace Dalet.Parse
     public class Return : Stm { }
     public class Function : Stm 
     {
-        public string Name { get; set; }
+        public Symbol Name { get; set; }
         public bool IsPublic { get; set; }
         public IEnumerable<Symbol> Parameters { get; set; }
         public IEnumerable<Stm> Body { get; set; }
@@ -63,13 +65,31 @@ namespace Dalet.Parse
     public class Field : Stm 
     {
         public Symbol Name { get; set; }
+        public bool IsPublic { get; set; }
     }
     public class Class : Stm 
     {
-        public string Name { get; set; }
-        // TODO class fields
+        public Symbol Name { get; set; }
+        public IEnumerable<Field> Fields { get; set; }
         public IEnumerable<Function> Methods { get; set; }
+        public IENumerable<Class> NestedClasses { get; set; }
         public bool IsPublic { get; set; }
+    }
+    public class Import : Stm 
+    {
+        public Symbol Name { get; set; }
+    }
+    public class Namespace : Stm
+    {
+        public Symbol Name { get; set; }
+        public IEnumerable<Class> Classes { get; set; }
+        public IEnumerable<Function> Functions { get; set; }
+        public IEnumerable<Import> Imports { get; set; }
+    }
+    public class Assignment : Stm 
+    {
+        public Symbol Name { get; set; }
+        public Expr Expr { get; set; }
     }
     public class Parser
     {
