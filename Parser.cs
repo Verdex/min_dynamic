@@ -91,6 +91,10 @@ namespace Dalet.Parse
         public Symbol Name { get; set; }
         public Expr Expr { get; set; }
     }
+    public class FunctionCall : Expr, Stm
+    {
+       // TODO  
+    }
     public class Parser
     {
     }
