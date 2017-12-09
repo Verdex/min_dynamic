@@ -5,19 +5,20 @@ using Dalet.Lex;
 
 namespace Dalet.Parse
 {
+    // TODO error handling info
     public interface Expr {}
     public interface Stm {}
     public class Var : Expr
     {
         public string Name { get; set; } 
     }
-    public class VarName 
+    public class Symbol
     {
-        public string Name { get; set; }
+        public string Value { get; set; }
     }
     public class Lambda : Expr 
     {
-        public IEnumerable<VarName> Parameters { get; set; }
+        public IEnumerable<Symbol> Parameters { get; set; }
         public IEnumerable<Stm> Body { get; set; }
     }
     public class Number : Expr
@@ -35,7 +36,7 @@ namespace Dalet.Parse
     public class Foreach : Stm
     {
         public Expr SeqExpr { get; set; }
-        public VarName VarName { get; set; }
+        public Symbol VarName { get; set; }
         public IEnumerable<Stm> Body { get; set; } 
     }
     public class While : Stm 
@@ -56,8 +57,12 @@ namespace Dalet.Parse
     {
         public string Name { get; set; }
         public bool IsPublic { get; set; }
-        public IEnumerable<VarName> Parameters { get; set; }
+        public IEnumerable<Symbol> Parameters { get; set; }
         public IEnumerable<Stm> Body { get; set; }
+    }
+    public class Field : Stm 
+    {
+        public Symbol Name { get; set; }
     }
     public class Class : Stm 
     {
